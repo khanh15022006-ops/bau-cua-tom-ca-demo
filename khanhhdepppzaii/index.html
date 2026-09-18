@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bầu Cua Demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="authScreen" class="auth-screen">
+    <div class="auth-box">
+        <div class="logo">🎲</div>
+        <h1>BẦU CUA</h1>
+        <p class="auth-subtitle">Bản demo điểm ảo</p>
+
+        <div id="loginForm">
+            <h2>Đăng nhập</h2>
+
+            <input id="loginUsername" type="text" placeholder="Tên tài khoản">
+            <input id="loginPassword" type="password" placeholder="Mật khẩu">
+
+            <button class="main-btn" onclick="login()">ĐĂNG NHẬP</button>
+
+            <p class="switch">
+                Chưa có tài khoản?
+                <span onclick="showRegister()">Đăng ký</span>
+            </p>
+
+            <p id="loginMessage" class="message"></p>
+        </div>
+
+        <div id="registerForm" class="hidden">
+            <h2>Tạo tài khoản</h2>
+
+            <input id="registerUsername" type="text" placeholder="Tên tài khoản">
+            <input id="registerPassword" type="password" placeholder="Mật khẩu (ít nhất 6 ký tự)">
+            <input id="registerPassword2" type="password" placeholder="Nhập lại mật khẩu">
+            <input id="registerEmail" type="email" placeholder="Email">
+
+            <button class="main-btn" onclick="sendOTP()">NHẬN MÃ OTP</button>
+
+            <div id="otpArea" class="hidden">
+                <p class="otp-title">OTP DEMO</p>
+                <div id="demoOTP" class="demo-otp">------</div>
+                <input id="otpInput" type="text" maxlength="6" placeholder="Nhập 6 số OTP">
+                <button class="main-btn" onclick="register()">XÁC NHẬN ĐĂNG KÝ</button>
+            </div>
+
+            <p class="switch">
+                Đã có tài khoản?
+                <span onclick="showLogin()">Đăng nhập</span>
+            </p>
+
+            <p id="registerMessage" class="message"></p>
+        </div>
+    </div>
+</div>
+
+<div id="gameScreen" class="hidden">
+    <header class="topbar">
+        <div class="brand">🎲 BẦU CUA</div>
+
+        <div class="user-info">
+            <span>👤 <b id="currentUser"></b></span>
+            <span class="balance">💰 <b id="balance">100.000</b></span>
+            <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="game-layout">
+
+            <section class="game-panel dice-panel">
+                <h2>🎲 KẾT QUẢ XÚC XẮC</h2>
+
+                <div class="dice-area">
+                    <div class="dice" id="dice1">?</div>
+                    <div class="dice" id="dice2">?</div>
+                    <div class="dice" id="dice3">?</div>
+                </div>
+
+                <div id="result" class="result">
+                    Chọn tối đa 3 mặt rồi đặt cược
+                </div>
+            </section>
+
+            <section class="game-panel">
+                <h2>🎯 ĐẶT CƯỢC</h2>
+                <p class="limit">Bạn có thể chọn tối đa <b>3 mặt</b>.</p>
+
+                <div class="choices">
+                    <button class="choice" data-face="bau" onclick="selectFace(this)">
+                        <span>🍐</span><b>Bầu</b><small>0 điểm</small>
+                    </button>
+                    <button class="choice" data-face="cua" onclick="selectFace(this)">
+                        <span>🦀</span><b>Cua</b><small>0 điểm</small>
+                    </button>
+                    <button class="choice" data-face="tom" onclick="selectFace(this)">
+                        <span>🦐</span><b>Tôm</b><small>0 điểm</small>
+                    </button>
+                    <button class="choice" data-face="ca" onclick="selectFace(this)">
+                        <span>🐟</span><b>Cá</b><small>0 điểm</small>
+                    </button>
+                    <button class="choice" data-face="huou" onclick="selectFace(this)">
+                        <span>🦌</span><b>Hươu</b><small>0 điểm</small>
+                    </button>
+                    <button class="choice" data-face="ga" onclick="selectFace(this)">
+                        <span>🐓</span><b>Gà</b><small>0 điểm</small>
+                    </button>
+                </div>
+
+                <div class="bet-input-area">
+                    <label for="betAmount">Số điểm cho mặt đang chọn</label>
+                    <input id="betAmount" type="number" min="100" step="100" value="1000">
+
+                    <div class="quick-buttons">
+                        <button onclick="setBet(1000)">1K</button>
+                        <button onclick="setBet(5000)">5K</button>
+                        <button onclick="setBet(10000)">10K</button>
+                        <button onclick="setBet(50000)">50K</button>
+                    </div>
+                </div>
+
+                <div class="selected-box">
+                    <h3>Các mặt đã chọn</h3>
+                    <div id="selectedBets">Chưa chọn mặt</div>
+                    <div class="total">Tổng cược: <b id="totalBet">0</b> điểm</div>
+                </div>
+
+                <button id="spinButton" class="spin-button" onclick="spin()">🎲 QUAY</button>
+            </section>
+        </div>
+
+        <section class="game-panel history-panel">
+            <h2>📜 LỊCH SỬ</h2>
+            <div id="history">Chưa có lượt chơi.</div>
+        </section>
+
+        <p class="footer-note">
+            Demo sử dụng điểm ảo, không có nạp/rút tiền thật.
+        </p>
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
